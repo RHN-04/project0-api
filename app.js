@@ -20,14 +20,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-//app.use((req, res, next) => {
-//    req.hello1 = "DATA"
-//    next();
-//    if (!res.headersSent) {
-//        res.status(500).send("Я ошиблась в коде");
-//   }
-//})
-
 app.use("/specialty", specialty)
 app.use("/curriculum", curriculum)
 app.use("/cycle", cycle)
@@ -42,4 +34,4 @@ app.use("/unit", unit)
 
 const PORT = process.env.PORT || 80;
 
-app.listen(PORT, console.log(`Server started on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
