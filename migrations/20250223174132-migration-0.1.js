@@ -3,30 +3,7 @@
   /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('curriculum', {
-      id: {
-        autoIncrement: true,
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      year: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      specialty: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'specialty',
-          key: 'id'
-        }
-      },
-      groups: {
-        type: Sequelize.STRING(255),
-        allowNull: true
-      }
-    });
+    
 
     await queryInterface.createTable('cycle', {
       id: {
@@ -58,40 +35,6 @@ module.exports = {
       }
     });
 
-    await queryInterface.createTable('lesson', {
-      id: {
-        autoIncrement: true,
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      name: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      type_of_lesson: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      number_of_hours: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-      },
-      theme: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'theme',
-          key: 'id'
-        }
-      },
-      number: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      }
-    });
-
     await queryInterface.createTable('professional_module', {
       id: {
         autoIncrement: true,
@@ -106,6 +49,134 @@ module.exports = {
       name: {
         type: Sequelize.STRING(255),
         allowNull: false
+      }
+    });
+
+    await queryInterface.createTable('specialty', {
+      code: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
+      name: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
+      id: {
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true
+      },
+      qualification: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
+      education_level: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'education_level',
+          key: 'id'
+        }
+      },
+      profile: {
+        type: Sequelize.STRING(255),
+        allowNull: true
+      }
+    });
+
+    await queryInterface.createTable('curriculum', {
+      id: {
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true
+      },
+      year: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      specialty: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'specialty',
+          key: 'id'
+        }
+      },
+      groups: {
+        type: Sequelize.STRING(255),
+        allowNull: true
+      }
+    });
+
+    await queryInterface.createTable('subject', {
+      id: {
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true
+      },
+      name: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
+      curriculum: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'curriculum',
+          key: 'id'
+        }
+      },
+      code: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
+      cycle: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'cycle',
+          key: 'id'
+        }
+      },
+      professional_module: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'professional_module',
+          key: 'id'
+        }
+      },
+      author: {
+        type: Sequelize.STRING(255),
+        allowNull: true
+      }
+    });
+
+    await queryInterface.createTable('unit', {
+      id: {
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true
+      },
+      number: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
+      name: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
+      subject: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'subject',
+          key: 'id'
+        }
       }
     });
 
@@ -211,84 +282,6 @@ module.exports = {
       }
     });
 
-    await queryInterface.createTable('specialty', {
-      code: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      name: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      id: {
-        autoIncrement: true,
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      qualification: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      education_level: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'education_level',
-          key: 'id'
-        }
-      },
-      profile: {
-        type: Sequelize.STRING(255),
-        allowNull: true
-      }
-    });
-
-    await queryInterface.createTable('subject', {
-      id: {
-        autoIncrement: true,
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        primaryKey: true
-      },
-      name: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      curriculum: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'curriculum',
-          key: 'id'
-        }
-      },
-      code: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      cycle: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'cycle',
-          key: 'id'
-        }
-      },
-      professional_module: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'professional_module',
-          key: 'id'
-        }
-      },
-      author: {
-        type: Sequelize.STRING(255),
-        allowNull: true
-      }
-    });
-
     await queryInterface.createTable('theme', {
       id: {
         autoIncrement: true,
@@ -334,43 +327,52 @@ module.exports = {
       }
     });
 
-    await queryInterface.createTable('unit', {
+    await queryInterface.createTable('lesson', {
       id: {
         autoIncrement: true,
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true
       },
-      number: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
       name: {
         type: Sequelize.STRING(255),
         allowNull: false
       },
-      subject: {
+      type_of_lesson: {
+        type: Sequelize.STRING(255),
+        allowNull: false
+      },
+      number_of_hours: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
+      theme: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'subject',
+          model: 'theme',
           key: 'id'
         }
+      },
+      number: {
+        type: Sequelize.INTEGER,
+        allowNull: false
       }
     });
   },
 
   async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('lesson');
+    await queryInterface.dropTable('theme');
+    await queryInterface.dropTable('source');
+    await queryInterface.dropTable('semester');
+    await queryInterface.dropTable('unit');
+    await queryInterface.dropTable('subject');
     await queryInterface.dropTable('curriculum');
+    await queryInterface.dropTable('specialty');
     await queryInterface.dropTable('cycle');
     await queryInterface.dropTable('education_level');
-    await queryInterface.dropTable('lesson');
     await queryInterface.dropTable('professional_module');
-    await queryInterface.dropTable('semester');
-    await queryInterface.dropTable('source');
-    await queryInterface.dropTable('specialty');
-    await queryInterface.dropTable('subject');
-    await queryInterface.dropTable('theme');
-    await queryInterface.dropTable('unit');
   }
 };
